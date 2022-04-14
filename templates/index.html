@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{# this is how we comment in djinja #}
+
+{% block content%}
+
+<head>
+    <title>{{ title }} - Event Planner</title>
+</head>
+<body>
+    <h1>Event Planner</h1>
+
+    <form action="/add_event" method="post"> <!-- This is an input form -->
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name">
+      <label for="date">Date:</label>
+      <input type="date" name="date" id="date">
+      <label for="Number of Guests">Number of Guests:</label>
+      <input type="text" name="Number of Guests" id="Number of Guests">
+      <label for="Room location">Room location:</label>
+      <input type="text" name="Room location" id="Room location">
+      <label for="description">Description</label>
+      <textarea name="description" rows="2" cols="30"></textarea>
+      <label for="recurring">Recurring?</label>
+      <input type="checkbox" name="recurring" id="recurring" value = "True">
+      <input type="submit" value="Add Event">
+    </form>
+
+    {% for event in events %}  
+    <!-- division bracket is python "code" and double curly bracket is item from python -->
+      <div>
+          <p>
+            {{ event.name }}: <b>{{ event.description }}</b>
+
+            {% if event.recurring%}
+              <span>recurring, &#9989</span>
+              
+            {% endif %}
+
+            <form action="/delete/<index>" method ="post">
+              <input type="submit" value="Delete">
+            </form>
+
+          </p>
+      </div>
+  
+    {% endfor %}
+    {%endblock %}
